@@ -10,7 +10,7 @@ def foo(): pass
 from bs4 import BeautifulSoup
 from dateutil import parser
 
-# %% ../nbs/01_podcast.ipynb 6
+# %% ../nbs/01_podcast.ipynb 7
 class Podcast():
     """Parses an xml rss feed
 
