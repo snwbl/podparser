@@ -4,6 +4,6 @@ project:
 website:
   title: "podparser"
   site-url: "https://snwbl.github.io/podparser"
-  description: "Podcast parser written for Python"
+  description: "Podcast parser written in Python"
   repo-branch: main
   repo-url: "https://github.com/snwbl/podparser"

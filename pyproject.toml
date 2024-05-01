@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "podparser"
+version = "0.1.0"
+description = "A podcast parser for python"
+authors = ["Leif Uwe Vogelsang <lu@snowball.rocks>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+beautifulsoup4 = "^4.12.3"
+lxml = "^5.2.1"
+rich = "^13.7.1"
+
+[tool.poetry.group.dev.dependencies]
+nbdev = "^2.3.13"
+jupyterlab-git = "^0.50.0"
+jupyterlab = "4.0.9"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
