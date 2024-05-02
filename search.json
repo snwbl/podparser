@@ -1,0 +1,62 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "podparser",
+    "section": "",
+    "text": "Code was initially forked from pyPodcastParser (https://github.com/mr-rigden/pyPodcastParser) Copyright (c) 2016 J. M. Rigden",
+    "crumbs": [
+      "podparser"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "podparser",
+    "section": "Install",
+    "text": "Install\npip install podparser",
+    "crumbs": [
+      "podparser"
+    ]
+  },
+  {
+    "objectID": "index.html#how-to-use",
+    "href": "index.html#how-to-use",
+    "title": "podparser",
+    "section": "How to use",
+    "text": "How to use\nFill me in please! Don’t forget code examples:\n\n1+1\n\n2",
+    "crumbs": [
+      "podparser"
+    ]
+  },
+  {
+    "objectID": "podcast.html",
+    "href": "podcast.html",
+    "title": "Podcast",
+    "section": "",
+    "text": "foo\n\n foo ()\n\n\nimport os\nfrom rich import print\n\n\n\n\nPodcast\n\n Podcast (feed_content)\n\n*Parses an xml rss feed\nRSS Specs http://cyber.law.harvard.edu/rss/rss.html\nMore RSS Specs http://www.rssboard.org/rss-specification\niTunes Podcast Specs http://www.apple.com/itunes/podcasts/specs.html\nThe cloud element aka RSS Cloud is not supported as it has been superseded by the superior PubSubHubbub protocal\nArgs: feed_content (str): An rss string\nNote: All attributes with empty or nonexistent element will have a value of None\nAttributes are generally strings or lists of strings, because we want to record the literal value of elements.\nAttributes: feed_content (str): The actual xml of the feed soup (bs4.BeautifulSoup): A soup of the xml with items and image removed image_soup (bs4.BeautifulSoup): soup of image full_soup (bs4.BeautifulSoup): A soup of the xml with items categories (list): List for strings representing the feed categories copyright (str): The feed’s copyright creative_commons (str): The feed’s creative commons license items (item): Item objects description (str): The feed’s description generator (str): The feed’s generator image_title (str): Feed image title image_url (str): Feed image url image_link (str): Feed image link to homepage image_width (str): Feed image width image_height (str): Feed image height itunes_author_name (str): The podcast’s author name for iTunes itunes_block (bool): Does the podcast block itunes itunes_categories (list): List of strings of itunes categories itunes_complete (str): Is this podcast done and complete itunes_explicit (str): Is this item explicit. Should only be “yes” and “clean.” itune_image (str): URL to itunes image itunes_keywords (list): List of strings of itunes keywords itunes_new_feed_url (str): The new url of this podcast language (str): Language of feed last_build_date (str): Last build date of this feed link (str): URL to homepage managing_editor (str): managing editor of feed published_date (str): Date feed was published pubsubhubbub (str): The URL of the pubsubhubbub service for this feed owner_name (str): Name of feed owner owner_email (str): Email of feed owner subtitle (str): The feed subtitle title (str): The feed title ttl (str): The time to live or number of minutes to cache feed web_master (str): The feed’s webmaster is_valid_rss (bool): Is this a valid RSS Feed is_valid_podcast (bool): Is this a valid Podcast date_time (datetime): When published*\n\n_transcripts = []\ndirectory = '../data'\nfor filename in os.listdir(directory):\n    file = os.path.join(directory, filename)\n    # checking if it is a file\n    if os.path.isfile(file):\n        #with open(file, \"r\") as f:\n        #    podcast = Podcast(f.read())\n        #    _podcast = podcast.to_dict()\n        #    del _podcast[\"items\"]\n        #    print(_podcast)\n        with open(file, \"r\") as f:\n            soup = BeautifulSoup(f, features=\"xml\")\n            for item in soup.find_all(\"item\"):\n                transcripts = item.find_all(\"transcript\")\n                if transcripts:\n                    for transcript in transcripts:\n                        print(transcript)\n                        _transcripts.append(\n                            {\n                                \"type\": transcript[\"type\"],\n                                \"url\": transcript[\"url\"],\n                            }\n                        )\n\n\nwith open(file, \"r\") as f:\n    soup = BeautifulSoup(f, features=\"xml\")\n\n\n# assign directory\ndirectory = '../data'\n \n# iterate over files in\n# that directory\nfor filename in os.listdir(directory):\n    file = os.path.join(directory, filename)\n    # checking if it is a file\n    if os.path.isfile(file):\n        with open(file, \"r\") as f:\n            podcast = Podcast(f.read())\n            _podcast = podcast.to_dict()\n            _podcast[\"items\"] = _podcast[\"items\"][0]\n            print(_podcast)\n    with open(file, \"r\") as f:\n        while True:\n            line = f.readline()\n            print(line, end=\"\")\n            if \"&lt;/item&gt;\" in line:\n                break\n\n\ndef set_itunes_keywords(self):\n        \"\"\"Parses itunes keywords and set value\"\"\"\n        #try:\n        keywords = self.soup.find('itunes:keywords').string\n        #except AttributeError:\n        keywords = None\n        #try:\n        self.itunes_keywords = [keyword.strip()\n                                    for keyword in keywords.split(',')]\n        self.itunes_keywords = list(set(self.itunes_keywords))\n        #except AttributeError:\n        self.itunes_keywords = []\n\n\npodcast.to_dict()\n\n\npodcast.soup()[0].find(\"itunes:keywords\").string\n\n\n_podcast = podcast.to_dict()\ndel _podcast[\"items\"]\nprint(_podcast)\n\n\npodcast.time_published\n\n\nwith open(\"../data/self-storage-university.rss\", \"r\") as f:\n    _file = f.read()\n    print(_file)\n    podcast = Podcast(_file)\n\n\npodcast.to_dict()",
+    "crumbs": [
+      "Podcast"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "core",
+    "section": "",
+    "text": "foo\n\n foo ()",
+    "crumbs": [
+      "core"
+    ]
+  },
+  {
+    "objectID": "item.html",
+    "href": "item.html",
+    "title": "Item",
+    "section": "",
+    "text": "foo\n\n foo ()\n\n\n\n\nItem\n\n Item (soup)\n\n*Parses an xml rss feed\nRSS Specs http://cyber.law.harvard.edu/rss/rss.html iTunes Podcast Specs http://www.apple.com/itunes/podcasts/specs.html\nArgs: soup (bs4.BeautifulSoup): BeautifulSoup object representing a rss item\nNote: All attributes with empty or nonexistent element will have a value of None\nAttributes: author (str): The author of the item comments (str): URL of comments creative_commons (str): creative commons license for this item description (str): Description of the item. enclosure_url (str): URL of enclosure enclosure_type (str): File MIME type enclosure_length (int): File size in bytes guid (str): globally unique identifier itunes_author_name (str): Author name given to iTunes itunes_block (bool): It this Item blocked from itunes itunes_closed_captioned: (str): It is this item have closed captions itunes_duration (str): Duration of enclosure itunes_explicit (str): Is this item explicit. Should only be yes or clean. itune_image (str): URL of item cover art itunes_order (str): Override published_date order itunes_subtitle (str): The item subtitle itunes_summary (str): The summary of the item link (str): The URL of item. published_date (str): Date item was published title (str): The title of item. date_time (datetime): When published transcripts (list): URLs to transcripts of the podcast provided by the publisher*",
+    "crumbs": [
+      "Item"
+    ]
+  }
+]
