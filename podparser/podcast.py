@@ -3,14 +3,15 @@
 # %% auto 0
 __all__ = ['foo', 'Podcast']
 
-# %% ../nbs/01_podcast.ipynb 3
+# %% ../nbs/01_podcast.ipynb 5
 def foo(): pass
 
-# %% ../nbs/01_podcast.ipynb 5
+# %% ../nbs/01_podcast.ipynb 7
 from bs4 import BeautifulSoup
 from dateutil import parser
+from .item import *
 
-# %% ../nbs/01_podcast.ipynb 7
+# %% ../nbs/01_podcast.ipynb 9
 class Podcast():
     """Parses an xml rss feed
 
