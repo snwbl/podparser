@@ -11,11 +11,14 @@ python = "^3.9"
 beautifulsoup4 = "^4.12.3"
 lxml = "^5.2.1"
 rich = "^13.7.1"
+justext = "^3.0.1"
 
 [tool.poetry.group.dev.dependencies]
 nbdev = "^2.3.13"
 jupyterlab-git = "^0.50.0"
 jupyterlab = "4.0.9"
+xmltodict = "^0.13.0"
+pydantic = "^2.7.1"
 
 [build-system]
 requires = ["poetry-core"]
