@@ -10,6 +10,7 @@ def foo(): pass
 from datetime import datetime
 from bs4 import BeautifulSoup
 from dateutil import parser
+import lxml
 
 # %% ../nbs/02_item.ipynb 6
 class Item(object):
@@ -102,7 +103,7 @@ class Item(object):
         item['link'] = self.link
         item['published_date'] = self.published_date
         item['title'] = self.title
-        item["transcripts"] = self.transcripts
+        item["podcast_transcripts"] = self.transcripts
         item["podcast_season"] = self.podcast_season
         item["podcast_episode"] = self.podcast_episode
         item["podcast_chapters"] = self.podcast_chapters
@@ -393,8 +394,9 @@ class Item(object):
 from pydantic import BaseModel
 from pydantic import field_validator
 from datetime import datetime
-from typing import List, Optional
+from typing import List, Optional, Union
 import justext
+import re
 
 # %% ../nbs/02_item.ipynb 8
 class Episode(BaseModel):
@@ -416,14 +418,14 @@ class Episode(BaseModel):
     itunes_order: Optional[str] = None
     itunes_subtitle: Optional[str] = None
     itunes_summary: Optional[str] = None
-    itunes_episode: Optional[int] = None
+    itunes_episode: Optional[Union[int, str]] = None
     description: Optional[str] = None
     link: Optional[str] = None
     published_date: Optional[datetime] = None
     title: Optional[str] = None
     podcast_transcripts: Optional[List] = None
     podcast_season: Optional[int] = None
-    podcast_episode: Optional[int] = None
+    podcast_episode: Optional[Union[int, str]] = None
     podcast_chapters: Optional[dict] = None
     podcast_person: Optional[str] = None
     podcast_locked: Optional[bool] = None
@@ -484,16 +486,30 @@ class Episode(BaseModel):
             paragraphs = justext.justext(text, justext.get_stoplist("English"))
         except ValueError:
             return text
+        except lxml.etree.ParserError:
+            return text
+        except TypeError:
+            return text
         _text = ""
         for paragraph in paragraphs:
             _text += f"{paragraph.text} "
         return _text.strip()
-    
-    #def detect_language(text):
-    #    try:
-    #        lang_detected = detect_langs(text.replace("\n", " ")).lower()
-    #        return lang_detected
-    #    except Exception as e:
-    #        print("An error occurred:", e)
-    #        return None
-    #    
+
+
+    @field_validator('published_date', mode='before')
+    @classmethod
+    def parse_date(cls, published_date):
+        if published_date:
+            published_date = parser.parse(published_date)
+            return published_date.isoformat()
+        else:
+            return published_date
+
+
+    @field_validator('itunes_explicit', mode='before')
+    @classmethod
+    def parse_itunes_explicit(cls, itunes_explicit):
+        if itunes_explicit == "clean":
+            return False
+        else:
+            return itunes_explicit
